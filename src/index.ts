@@ -1,7 +1,5 @@
-import Vector from "./math/Vector";
+import { Vector } from "./math";
+import { buildPRM } from "./pathPlanning";
+import { astarSearch, breadthFirstSearch, uniformCostSearch } from "./search";
 
-const Modules = {
-  Vector,
-};
-
-export default Modules;
+export { Vector, buildPRM, astarSearch, breadthFirstSearch, uniformCostSearch };
