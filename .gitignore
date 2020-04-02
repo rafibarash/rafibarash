@@ -1,0 +1,11 @@
+# Node and Yarn
+node_modules/
+yarn-error.log
+package-lock.json
+
+# Mac
+.DS_Store
+
+# Microbundle
+dist/
+.rts2_cache_*/

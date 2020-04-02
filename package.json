@@ -1,0 +1,16 @@
+{
+  "name": "game_animation_primitives",
+  "version": "1.0.0",
+  "author": "Rafael Barash <rafabarash@gmail.com>",
+  "license": "MIT",
+  "source": "src/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.module.js",
+  "scripts": {
+    "build": "microbundle",
+    "dev": "microbundle watch"
+  },
+  "devDependencies": {
+    "microbundle": "^0.11.0"
+  }
+}
