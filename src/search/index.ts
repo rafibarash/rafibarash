@@ -1,5 +1,5 @@
 import astarSearch from "./astarSearch";
 import uniformCostSearch from "./uniformCostSearch";
-import breadthFirstSearch from "./breadthFirstSearch";
+import buildPRM from "./prm";
 
-export { astarSearch, uniformCostSearch, breadthFirstSearch };
+export { astarSearch, uniformCostSearch, buildPRM };

@@ -70,6 +70,12 @@ export default class Vector {
     this.div(mag);
   }
 
+  static normalize(vec: Vector): Vector {
+    const newVec = vec.copy();
+    newVec.normalize();
+    return newVec;
+  }
+
   limit(max: number): void {
     const mag = this.mag();
     if (mag > max) {
