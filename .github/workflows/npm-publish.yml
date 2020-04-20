@@ -19,8 +19,8 @@ jobs:
         with:
           node-version: 12
       - run: yarn install
-      #       - run: yarn test
       - run: yarn build
+      #       - run: yarn test
 
   publish-npm:
     needs: build
@@ -46,8 +46,6 @@ jobs:
         with:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
-      #       - run: npm ci
-      #       - run: npm publish
       - run: yarn install
       - run: yarn build
       - run: yarn publish
