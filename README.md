@@ -1,6 +1,40 @@
-# Game Animation Primitives
+# Simple Physics Engine
 
 A library containing algorithms & abstract classes for building animations/games, regardless of the platform.
+
+**This package is currently being developed and is not finished or tested.**
+
+## Example Usage
+
+Using the physics engine and adding a Bird character
+
+```javascript
+import { AbstractPhysics, RigidBody } from 'simple-physics-engine'
+
+class Bird extends RigidBody {
+  constructor(pos, options) {
+    super(pos, options)
+    // other constructor logic
+  }
+
+  // other extensions
+}
+
+class Physics extends AbstractPhysics {
+  // implement abstract init() method
+  function init() {
+    addCharacter(bird)
+    // other init logic
+  }
+
+  // implement abstract update() method
+  function update(dt) {
+    // your update logic
+  }
+
+  // other extensions
+}
+```
 
 ## Supported Algorithms
 
