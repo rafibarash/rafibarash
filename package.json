@@ -7,6 +7,10 @@
   "source": "src/index.ts",
   "main": "dist/index.js",
   "module": "dist/index.module.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rafibarash/Simple-Physics-Engine.git"
+  },
   "scripts": {
     "build": "microbundle",
     "dev": "microbundle watch"
