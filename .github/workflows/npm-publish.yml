@@ -4,11 +4,11 @@
 name: Publish as NPM Package
 
 on:
-  push:
-    branches:
-      - master
-#   release:
-#     types: [created]
+#   push:
+#     branches:
+#       - master
+  release:
+    types: [created]
 
 jobs:
   build:
