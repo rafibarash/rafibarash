@@ -1,3 +1,4 @@
 import Vector from "./Vector";
+import { getRandomInt } from "./util";
 
-export { Vector };
+export { Vector, getRandomInt };

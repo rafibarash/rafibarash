@@ -1,7 +1,6 @@
-import Spatial from "./Spatial";
-import CollisionObject from "./CollisionObject";
-import StaticBody from "./StaticBody";
-import RigidBody from "./RigidBody";
-import Agent from "./Agent";
+import PhysicsEngine from "./PhysicsEngine";
+import PhysicsObject from "./PhysicsObject";
+import BoundingSphere from "./BoundingSphere";
+import AABB from "./AABB";
 
-export { Spatial, CollisionObject, StaticBody, RigidBody, Agent };
+export { PhysicsEngine, PhysicsObject, BoundingSphere, AABB };

@@ -1,4 +1,13 @@
 import { Vector } from "./math";
-import { buildPRM, astarSearch, uniformCostSearch } from "./search";
+import { astarSearch, uniformCostSearch } from "./search";
+import { PhysicsEngine, PhysicsObject, BoundingSphere, AABB } from "./engine";
 
-export { Vector, buildPRM, astarSearch, uniformCostSearch };
+export {
+  Vector,
+  astarSearch,
+  uniformCostSearch,
+  PhysicsEngine,
+  PhysicsObject,
+  BoundingSphere,
+  AABB,
+};

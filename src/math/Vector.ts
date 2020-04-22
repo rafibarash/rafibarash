@@ -53,6 +53,23 @@ export default class Vector {
     return new Vector(vec.x / s, vec.y / s, vec.z / s);
   }
 
+  max(): number {
+    let maxVal = this.x;
+    if (this.y > maxVal) maxVal = this.y;
+    if (this.z > maxVal) maxVal = this.z;
+    return maxVal;
+  }
+
+  static max(v1: Vector, v2: Vector): Vector {
+    const vec = new Vector();
+
+    vec.x = v1.x > v2.x ? v1.x : v2.x;
+    vec.y = v1.y > v2.y ? v1.y : v2.y;
+    vec.z = v1.z > v2.z ? v1.z : v2.z;
+
+    return vec;
+  }
+
   /***********************************************
    * More Complex Math
    **********************************************/
