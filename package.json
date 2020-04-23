@@ -1,6 +1,6 @@
 {
   "name": "simple-physics-engine",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A library containing algorithms & abstract classes for building animations/games, regardless of the platform.",
   "author": "Rafael Barash <rafabarash@gmail.com>",
   "license": "MIT",
@@ -12,11 +12,13 @@
     "url": "https://github.com/rafibarash/Simple-Physics-Engine.git"
   },
   "scripts": {
-    "build": "microbundle",
+    "old-build": "microbundle",
+    "build": "parcel build src/index.ts",
     "dev": "microbundle watch"
   },
   "devDependencies": {
-    "microbundle": "^0.11.0"
+    "microbundle": "^0.11.0",
+    "parcel-bundler": "^1.12.4"
   },
   "dependencies": {
     "tinyqueue": "^2.0.3"

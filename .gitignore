@@ -6,6 +6,9 @@ package-lock.json
 # Mac
 .DS_Store
 
+# Parcel
+.cache/
+
 # Microbundle
 dist/
 .rts2_cache_*/
