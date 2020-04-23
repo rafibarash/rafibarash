@@ -20,14 +20,6 @@ export default abstract class PhysicsEngine {
   abstract init(): void;
 
   /**
-   * Function that to render the state of the physics engine.
-   *
-   * @abstract
-   * @memberof Physics
-   */
-  abstract render(): void;
-
-  /**
    * Updates the state of the world by a timestep 'dt'.
    *
    * @param {number} dt

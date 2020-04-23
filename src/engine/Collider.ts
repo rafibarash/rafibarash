@@ -45,9 +45,13 @@ export default abstract class Collider {
           return self.intersectAABB(<AABB>other);
         }
       }
+      case Collider.Type.NONE: {
+        break;
+      }
       default:
-        return new IntersectData(false, 0);
+        break;
     }
+    return new IntersectData(false, 0);
   }
 
   getType(): Type {
