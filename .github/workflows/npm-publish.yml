@@ -4,9 +4,9 @@
 name: Publish as NPM Package
 
 on:
-#   push:
-#     branches:
-#       - master
+  push:
+    branches:
+      - master
   release:
     types: [created]
 
