@@ -1,6 +1,7 @@
 import { Vector } from "../math";
 import BoundingSphere from "./BoundingSphere";
 import Collider from "./Collider";
+import NoCollider from "./NoCollider";
 
 export default abstract class PhysicsObject {
   protected pos: Vector;
@@ -10,7 +11,10 @@ export default abstract class PhysicsObject {
   protected maxForce: number;
   protected collider: Collider;
 
-  constructor(collider: Collider, { vel = new Vector(), maxForce = Infinity }) {
+  constructor(
+    pos: Vector,
+    { collider = new NoCollider(pos), vel = new Vector(), maxForce = Infinity }
+  ) {
     this.pos = collider.getCenter();
     this.oldPos = collider.getCenter();
     this.vel = vel;
