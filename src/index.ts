@@ -5,7 +5,7 @@ import {
   PhysicsObject,
   BoundingSphere,
   AABB,
-  NoCollision,
+  NoCollider,
 } from "./engine";
 
 export {
@@ -16,5 +16,5 @@ export {
   PhysicsObject,
   BoundingSphere,
   AABB,
-  NoCollision,
+  NoCollider,
 };
