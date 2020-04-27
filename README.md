@@ -71,3 +71,10 @@ TODO: Add picture of hierarchy
 | StaticBody      | An extension of CollisionObject that is incapable of moving                   |
 | RigidBody       | An extension of CollisionObject that supports movement and can receive forces |
 | Agent           | An extension of RigidBody that holds a goal and a path towards that goal      |
+
+## TODO
+
+- [ ] Write Particle and ParticleSystem classes
+- [ ] Make sure BoundingSphere collision detection is robust, add bounce handling if time
+- [ ] Implement kd-tree to make collision detection quicker
+- [ ] Write abstract Camera class?
