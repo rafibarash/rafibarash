@@ -77,10 +77,10 @@ export default class ParticleSystem implements ParticleSystemProps {
    * @memberof ParticleSystem
    */
   update(dt: number): void {
-    if (this.isDead()) return;
+    if (this.isDead() && this.particles.length === 0) return;
 
     const liveParticles: Array<Particle> = [];
-    console.log('about to loop through existing particles', this.particles);
+    console.log('dt: ', dt, 'particles: ', this.particles);
     for (let p of this.particles) {
       if (!p.isDead()) {
         // particle still alive
@@ -91,10 +91,11 @@ export default class ParticleSystem implements ParticleSystemProps {
       }
     }
     this.particles = liveParticles;
-    console.log('about to gen particles');
-    this.genParticles(dt);
-    console.log('just generated particles', this.particles);
-    this.lifespan -= dt;
+
+    if (!this.isDead()) {
+      this.genParticles(dt);
+      this.lifespan -= dt;
+    }
   }
 
   /**
@@ -105,7 +106,6 @@ export default class ParticleSystem implements ParticleSystemProps {
    */
   genParticles(dt: number): void {
     const numParticles = Math.round(this.genRate * dt);
-    console.log(numParticles);
     for (let i = 0; i < numParticles; i++) {
       this.particles.push(this.genParticle());
     }
@@ -217,8 +217,7 @@ export default class ParticleSystem implements ParticleSystemProps {
       lifespan,
     };
 
-    const particle = new Particle();
-    particle.setProps(particleProps);
+    const particle = new Particle(particleProps);
 
     return particle;
   }

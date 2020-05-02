@@ -27,7 +27,7 @@ const starfield: ParticleSystemProps = {
   opacityBase: 1,
 
   // genRate: 20000,
-  genRate: 1,
+  genRate: 100,
   particleLifespan: 60.0,
   lifespan: 0.1,
 };

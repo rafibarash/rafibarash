@@ -62,8 +62,11 @@ export default class Particle extends PhysicsObject implements ParticleProps {
       angleVel,
       angleAcc,
       radius,
+      radiusTween,
       color,
+      colorTween,
       opacity,
+      opacityTween,
       texture,
     } = props;
 
@@ -75,8 +78,11 @@ export default class Particle extends PhysicsObject implements ParticleProps {
     this.angleVel = angleVel;
     this.angleAcc = angleAcc;
     this.radius = radius;
+    this.radiusTween = radiusTween;
     this.color = color;
+    this.colorTween = colorTween;
     this.opacity = opacity;
+    this.opacityTween = opacityTween;
     this.texture = texture;
   }
 

@@ -16,12 +16,7 @@ class App extends AbstractApp {
   }
 
   update(dt: number) {
-    if (!this.particleSystem.isDead()) {
-      // update particle system
-      this.particleSystem.update(dt * 0.5);
-    } else {
-      // TODO: Kill and remove from scene
-    }
+    this.particleSystem.update(dt * 0.001);
   }
 
   render() {
