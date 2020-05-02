@@ -12,11 +12,18 @@
     "url": "https://github.com/rafibarash/Simple-Physics-Engine.git"
   },
   "scripts": {
+    "prettier": "prettier --write \"src/**/*.js\"",
+    "dev": "parcel $FILE",
+    "watch": "parcel watch $FILE",
+    "start": "concurrently \"yarn dev $FILE\" \"yarn watch $FILE\" ",
+    "start:particleEngine": "FILE=src/examples/threejs/particleSystem/particleEngine.html yarn start",
     "build": "parcel build src/index.ts",
     "test": "echo 'you should maybe write some tests...'"
   },
   "devDependencies": {
+    "concurrently": "^5.2.0",
     "parcel-bundler": "^1.12.4",
+    "prettier": "^2.0.5",
     "typescript": "^3.8.3"
   },
   "dependencies": {
