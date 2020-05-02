@@ -1,3 +1,6 @@
+// Heavily influenced by a great Youtube series on building a Physics Engine
+// https://www.youtube.com/watch?v=3Oay1YxkP5c
+
 import { Vector } from "../math";
 import PhysicsObject from "./PhysicsObject";
 import IntersectData from "./IntersectData";

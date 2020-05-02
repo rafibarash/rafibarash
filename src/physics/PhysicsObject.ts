@@ -1,5 +1,4 @@
 import { Vector } from "../math";
-import BoundingSphere from "./BoundingSphere";
 import Collider from "./Collider";
 import NoCollider from "./NoCollider";
 
@@ -8,22 +7,29 @@ export default abstract class PhysicsObject {
   protected oldPos: Vector;
   protected vel: Vector;
   protected acc: Vector;
+  protected mass: number;
   protected maxForce: number;
   protected collider: Collider;
 
   constructor(
     pos: Vector,
-    { collider = new NoCollider(pos), vel = new Vector(), maxForce = Infinity }
+    {
+      collider = new NoCollider(pos),
+      vel = new Vector(),
+      maxForce = Infinity,
+      mass = 1,
+    }
   ) {
     this.pos = collider.getCenter();
     this.oldPos = collider.getCenter();
     this.vel = vel;
     this.acc = new Vector();
+    this.mass = mass;
     this.maxForce = maxForce;
     this.collider = collider;
   }
 
-  abstract render(): void;
+  // abstract render(): void;
 
   update(dt: number): void {
     this.numericalIntegration(dt);
@@ -36,7 +42,7 @@ export default abstract class PhysicsObject {
     this.acc.add(force);
   }
 
-  private numericalIntegration(dt: number): void {
+  protected numericalIntegration(dt: number): void {
     this.vel.add(Vector.mul(this.acc, dt));
     this.pos.add(Vector.mul(this.vel, dt));
     this.acc = new Vector();

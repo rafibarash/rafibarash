@@ -6,15 +6,23 @@ import {
   BoundingSphere,
   AABB,
   NoCollider,
-} from "./engine";
+} from "./physics";
+import { Particle, ParticleSystem, Tween } from "./particleSystem";
 
 export {
+  /// Math ///
   Vector,
+  /// Search ///
   astarSearch,
   uniformCostSearch,
+  /// Physics ///
   PhysicsEngine,
   PhysicsObject,
   BoundingSphere,
   AABB,
   NoCollider,
+  /// Particle System ///
+  Particle,
+  ParticleSystem,
+  Tween,
 };

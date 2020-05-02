@@ -43,6 +43,13 @@ export default class Vector {
     return new Vector(vec.x * s, vec.y * s, vec.z * s);
   }
 
+  static mulVecs(v1: Vector, v2: Vector): Vector {
+    const x = v1.x * v2.x;
+    const y = v1.y * v2.y;
+    const z = v1.z * v2.z;
+    return new Vector(x, y, z);
+  }
+
   div(s: number): void {
     this.x /= s;
     this.y /= s;
@@ -122,6 +129,14 @@ export default class Vector {
         Math.pow(v1.y - v2.y, 2) +
         Math.pow(v1.z - v2.z, 2)
     );
+  }
+
+  // Linearly interpolate from this to other vec, where a=0 returns this, and a=1 return vec
+  lerp(other: Vector, a): Vector {
+    const x = (a - other.x) / (this.x - other.x);
+    const y = (a - other.y) / (this.y - other.y);
+    const z = (a - other.z) / (this.z - other.z);
+    return new Vector(x, y, z);
   }
 
   projectToLine(directional: Vector): Vector {
