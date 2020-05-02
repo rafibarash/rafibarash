@@ -1,9 +1,9 @@
 // Plane Collider
 // https://www.youtube.com/watch?v=5BJs02PaSok&list=PLEETnX-uPtBXm1KEr_2zQ6K_0hoGH6JJ0&index=5
 
-import { Vector } from "../math";
-import IntersectData from "./IntersectData";
-import BoundingSphere from "./BoundingSphere";
+import { Vector } from '../math';
+import IntersectData from './IntersectData';
+import BoundingSphere from './BoundingSphere';
 
 export default class Plane {
   private normal: Vector;

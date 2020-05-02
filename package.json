@@ -12,7 +12,7 @@
     "url": "https://github.com/rafibarash/Simple-Physics-Engine.git"
   },
   "scripts": {
-    "prettier": "prettier --write \"src/**/*.js\"",
+    "prettier": "prettier --write \"src/**/*.ts\"",
     "dev": "parcel $FILE",
     "watch": "parcel watch $FILE",
     "start": "concurrently \"yarn dev $FILE\" \"yarn watch $FILE\" ",
@@ -37,6 +37,6 @@
     }
   },
   "lint-staged": {
-    "*.{js,css,md}": "prettier --write"
+    "*.{ts,css,md}": "prettier --write"
   }
 }

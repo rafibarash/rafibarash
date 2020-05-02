@@ -1,4 +1,4 @@
-import Vector from "../math/Vector";
+import Vector from '../math/Vector';
 
 // Returns the sum path distance moving from start to end of a vector array
 // Used as g(x) in searches

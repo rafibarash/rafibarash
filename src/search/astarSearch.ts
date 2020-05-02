@@ -1,13 +1,16 @@
-import TinyQueue from "tinyqueue";
+import TinyQueue from 'tinyqueue';
 import type { Comparator } from 'tinyqueue';
-import Vector from "../math/Vector";
-import { sumPathDistance, distanceToGoal } from './util'
+import Vector from '../math/Vector';
+import { sumPathDistance, distanceToGoal } from './util';
 
 // Goal position for pathComparator, set before pathComparator initialized
 let goalPos;
 
 // Compares sum path distances of each path, sorts in ascending order
-const pathComparator: Comparator<Array<Vector>> = (path1: Array<Vector>, path2: Array<Vector>): number => {
+const pathComparator: Comparator<Array<Vector>> = (
+  path1: Array<Vector>,
+  path2: Array<Vector>
+): number => {
   // Calculate f(x) = g(x) + h(x) for both paths, where g(x) is sumPathDistance and h(x) is distanceToGoal
   const fx1 = sumPathDistance(path1) + distanceToGoal(path1, goalPos);
   const fx2 = sumPathDistance(path2) + distanceToGoal(path2, goalPos);
@@ -16,7 +19,7 @@ const pathComparator: Comparator<Array<Vector>> = (path1: Array<Vector>, path2: 
   if (fx1 > fx2) return 1;
   else if (fx1 < fx2) return -1;
   return 0;
-}
+};
 
 // A* Search through graph from start to goal
 const astarSearch = (
@@ -26,12 +29,12 @@ const astarSearch = (
 ): Array<Vector> => {
   // Make sure start and goal in graph
   if (!graph.has(start) || !graph.has(goal)) {
-    throw new Error("Graph must contain start and goal.");
+    throw new Error('Graph must contain start and goal.');
   }
 
   // Set global goalPos
   goalPos = goal;
-  
+
   // Initialize some outer loop variables
   let path: Array<Vector> = [];
   const visited = new Set<Vector>();

@@ -1,5 +1,5 @@
-import { Vector } from "../math";
-import Tween from "./Tween";
+import { Vector } from '../math';
+import Tween from './Tween';
 
 export interface ParticleSystemProps {
   origin: Vector;

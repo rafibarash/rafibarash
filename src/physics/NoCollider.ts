@@ -1,5 +1,5 @@
-import Collider from "./Collider";
-import { Vector } from "../math";
+import Collider from './Collider';
+import { Vector } from '../math';
 
 export default class NoCollider extends Collider {
   protected pos: Vector;

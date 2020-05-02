@@ -1,10 +1,10 @@
 // Collider class that all colliders inherit from
 // https://www.youtube.com/watch?v=vkuZPVSR4hI&list=PLEETnX-uPtBXm1KEr_2zQ6K_0hoGH6JJ0&index=9
 
-import IntersectData from "./IntersectData";
-import BoundingSphere from "./BoundingSphere";
-import { Vector } from "../math";
-import AABB from "./AABB";
+import IntersectData from './IntersectData';
+import BoundingSphere from './BoundingSphere';
+import { Vector } from '../math';
+import AABB from './AABB';
 
 enum Type {
   SPHERE,

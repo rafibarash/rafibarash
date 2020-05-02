@@ -1,9 +1,9 @@
 // Axis Aligned Bounding Boxes
 // https://www.youtube.com/watch?v=Iu6nAXFm2Wo&list=PLEETnX-uPtBXm1KEr_2zQ6K_0hoGH6JJ0&index=4
 
-import { Vector } from "../math";
-import IntersectData from "./IntersectData";
-import Collider from "./Collider";
+import { Vector } from '../math';
+import IntersectData from './IntersectData';
+import Collider from './Collider';
 
 export default class AABB extends Collider {
   private minExtents: Vector;

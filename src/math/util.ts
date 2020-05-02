@@ -3,7 +3,7 @@
  *
  */
 
-import { Vector } from ".";
+import { Vector } from '.';
 
 /**
  * Generates random int between min and max.

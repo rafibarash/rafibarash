@@ -1,6 +1,6 @@
-import { Vector } from "../math";
-import Collider from "./Collider";
-import NoCollider from "./NoCollider";
+import { Vector } from '../math';
+import Collider from './Collider';
+import NoCollider from './NoCollider';
 
 export default abstract class PhysicsObject {
   protected pos: Vector;

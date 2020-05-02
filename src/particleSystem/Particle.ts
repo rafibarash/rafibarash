@@ -1,6 +1,6 @@
-import { ParticleProps } from "./types";
-import { Vector } from "../math";
-import { PhysicsObject } from "../physics";
+import { ParticleProps } from './types';
+import { Vector } from '../math';
+import { PhysicsObject } from '../physics';
 
 export default class Particle extends PhysicsObject {
   props: ParticleProps;

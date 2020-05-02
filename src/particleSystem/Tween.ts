@@ -1,7 +1,7 @@
 // Typescript implementation of this Tween class
 // https://github.com/stemkoski/stemkoski.github.com/blob/f5c7120af8488d04255b3e4492f4fb214d80b6ff/Three.js/js/ParticleEngine.js
 
-import { Vector } from "../math";
+import { Vector } from '../math';
 
 type numberOrVector = number | Vector;
 
@@ -16,7 +16,7 @@ export default class Tween {
 
   lerp(t: number): numberOrVector {
     if (this.values.length === 0) {
-      throw new Error("Trying to lerp a blank Tween class.");
+      throw new Error('Trying to lerp a blank Tween class.');
     }
 
     let i = 0;

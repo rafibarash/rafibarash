@@ -1,10 +1,10 @@
 // Very heavily influenced by an existing particle engine
 // https://github.com/stemkoski/stemkoski.github.com/blob/f5c7120af8488d04255b3e4492f4fb214d80b6ff/Three.js/js/ParticleEngine.js
 
-import Particle from "./Particle";
-import { ParticleProps, ParticleSystemProps, Type } from "./types";
-import { Vector, getRandomInt } from "../math";
-import Tween from "./Tween";
+import Particle from './Particle';
+import { ParticleProps, ParticleSystemProps, Type } from './types';
+import { Vector, getRandomInt } from '../math';
+import Tween from './Tween';
 
 export default abstract class ParticleSystem {
   props: ParticleSystemProps; // Internal particle system properties

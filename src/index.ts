@@ -1,13 +1,13 @@
-import { Vector } from "./math";
-import { astarSearch, uniformCostSearch } from "./search";
+import { Vector } from './math';
+import { astarSearch, uniformCostSearch } from './search';
 import {
   PhysicsEngine,
   PhysicsObject,
   BoundingSphere,
   AABB,
   NoCollider,
-} from "./physics";
-import { Particle, ParticleSystem, Tween } from "./particleSystem";
+} from './physics';
+import { Particle, ParticleSystem, Tween } from './particleSystem';
 
 export {
   /// Math ///

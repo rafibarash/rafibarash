@@ -1,9 +1,9 @@
 // Used to calculate sphere collisions
 // https://www.youtube.com/watch?v=eFxcAI85xeg&list=PLEETnX-uPtBXm1KEr_2zQ6K_0hoGH6JJ0&index=3
 
-import IntersectData from "./IntersectData";
-import Collider from "./Collider";
-import { Vector } from "../math";
+import IntersectData from './IntersectData';
+import Collider from './Collider';
+import { Vector } from '../math';
 
 export default class BoundingSphere extends Collider {
   private center: Vector;
