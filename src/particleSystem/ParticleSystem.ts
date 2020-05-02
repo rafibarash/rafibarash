@@ -6,12 +6,11 @@ import { ParticleProps, ParticleSystemProps, Type } from './types';
 import { Vector, getRandomInt } from '../math';
 import Tween from './Tween';
 
-export default abstract class ParticleSystem {
+export default class ParticleSystem {
   props: ParticleSystemProps; // Internal particle system properties
   particles: Array<Particle>;
 
-  constructor(props: ParticleSystemProps) {
-    this.props = props;
+  constructor() {
     this.particles = [];
   }
 
@@ -22,17 +21,24 @@ export default abstract class ParticleSystem {
    * @memberof ParticleSystem
    */
   update(dt: number): void {
-    const liveParticles = new Array<Particle>();
-    for (let p of this.particles) {
-      if (!p.isDead()) {
-        // particle still alive
-        p.update(dt);
-        liveParticles.push(p);
+    if (!this.isDead()) {
+      const liveParticles: Array<Particle> = [];
+      console.log('about to loop through existing particles', this.particles);
+      for (let p of this.particles) {
+        if (!p.isDead()) {
+          // particle still alive
+          p.update(dt);
+          liveParticles.push(p);
+        } else {
+          // kill particle
+        }
       }
+      this.particles = liveParticles;
+      console.log('about to gen particles');
+      this.genParticles(dt);
+      console.log('just generated particles', this.particles);
+      this.props.lifespan -= dt;
     }
-    this.particles = liveParticles;
-    this.genParticles(dt);
-    this.props.lifespan -= dt;
   }
 
   /**
@@ -43,6 +49,7 @@ export default abstract class ParticleSystem {
    */
   genParticles(dt: number): void {
     const numParticles = Math.round(this.props.genRate * dt);
+    console.log(numParticles);
     for (let i = 0; i < numParticles; i++) {
       this.particles.push(this.genParticle());
     }
@@ -55,8 +62,6 @@ export default abstract class ParticleSystem {
    * @memberof ParticleSystem
    */
   genParticle(): Particle {
-    const particle = new Particle();
-
     const {
       posStyle,
       posBase,
@@ -91,41 +96,72 @@ export default abstract class ParticleSystem {
       opacitySpread,
       opacityTween,
 
+      particleTexture,
+
       particleLifespan,
     } = this.props;
 
-    let particleProps: ParticleProps; // Particle attributes We are setting
+    let pos: Vector,
+      vel: Vector,
+      acc: Vector,
+      lifespan: number,
+      angle: number,
+      angleVel: number,
+      angleAcc: number,
+      radius: number,
+      color: Vector,
+      opacity: number,
+      texture: any;
 
     if (posStyle === Type.CUBE) {
-      particleProps.pos = this.randomVec(posBase, posSpread);
+      pos = this.randomVec(posBase, posSpread);
     } else if (posStyle === Type.SPHERE) {
       const z = 2 * Math.random() - 1;
       const t = 6.2832 * Math.random();
       const r = Math.sqrt(1 - z * z);
       const vec3 = new Vector(r * Math.cos(t), r * Math.sin(t), z);
-      particleProps.pos = Vector.add(posBase, Vector.mul(vec3, posRadius));
+      pos = Vector.add(posBase, Vector.mul(vec3, posRadius));
     }
 
     if (velStyle === Type.CUBE) {
-      particleProps.vel = this.randomVec(velBase, velSpread);
+      vel = this.randomVec(velBase, velSpread);
     } else if (velStyle === Type.SPHERE) {
-      const direction = Vector.sub(particleProps.pos, posBase);
+      const direction = Vector.sub(pos, posBase);
       const speed = this.randomNum(speedBase, speedSpread);
-      particleProps.vel = Vector.mul(Vector.normalize(direction), speed);
+      vel = Vector.mul(Vector.normalize(direction), speed);
     }
 
-    particleProps.acc = this.randomVec(accBase, accSpread);
+    acc = this.randomVec(accBase, accSpread);
 
-    particleProps.angle = this.randomNum(angleBase, angleSpread);
-    particleProps.angleVel = this.randomNum(angleVelBase, angleVelSpread);
-    particleProps.angleAcc = this.randomNum(angleAccBase, angleAccSpread);
+    angle = this.randomNum(angleBase, angleSpread);
+    angleVel = this.randomNum(angleVelBase, angleVelSpread);
+    angleAcc = this.randomNum(angleAccBase, angleAccSpread);
 
-    particleProps.radius = this.randomNum(radiusBase, radiusSpread);
+    radius = this.randomNum(radiusBase, radiusSpread);
 
-    particleProps.color = this.randomVec(colorBase, colorSpread);
-    particleProps.opacity = this.randomNum(opacityBase, opacitySpread);
-    particleProps.lifespan = particleLifespan;
+    color = this.randomVec(colorBase, colorSpread);
+    opacity = this.randomNum(opacityBase, opacitySpread);
+    texture = particleTexture;
+    lifespan = particleLifespan;
 
+    const particleProps: ParticleProps = {
+      pos,
+      vel,
+      acc,
+      angle,
+      angleVel,
+      angleAcc,
+      radius,
+      radiusTween,
+      color,
+      colorTween,
+      opacity,
+      opacityTween,
+      texture,
+      lifespan,
+    };
+
+    const particle = new Particle();
     particle.setProps(particleProps);
 
     return particle;
@@ -152,10 +188,44 @@ export default abstract class ParticleSystem {
   setProps(props: ParticleSystemProps) {
     this.props = props;
 
-    // Initialize tweens
-    this.props.radiusTween = props.radiusTween || new Tween();
-    this.props.colorTween = props.colorTween || new Tween();
-    this.props.opacityTween = props.opacityTween || new Tween();
+    // Default Values
+    this.props.posSpread = props.posSpread || new Vector();
+    this.props.posRadius = props.posRadius || 10;
+
+    this.props.velSpread = props.velSpread || new Vector();
+    this.props.speedBase = props.speedBase || 20;
+    this.props.speedSpread = props.speedSpread || 10;
+
+    this.props.accBase = props.accBase || new Vector();
+    this.props.accSpread = props.accSpread || new Vector();
+
+    // this.props.particleTexture =
+    //   props.particleTexture || THREE.ImageUtils.loadTexture('images/star.png');
+    // this.props.blendStyle = props.blendStyle || THREE.NormalBlending
+
+    this.props.angleBase = props.angleBase || 0;
+    this.props.angleSpread = props.angleSpread || 0;
+    this.props.angleVelBase = props.angleVelBase || 0;
+    this.props.angleVelSpread = props.angleVelSpread || 0;
+    this.props.angleAccBase = props.angleAccBase || 0;
+    this.props.angleAccSpread = props.angleAccSpread || 0;
+
+    this.props.radiusBase = props.radiusBase || 20;
+    this.props.radiusSpread = props.radiusSpread || 5;
+    this.props.radiusTween = props.radiusTween || new Tween([0, 1], [1, 20]);
+
+    // by default colors in HSL
+    this.props.colorBase = props.colorBase || new Vector(0.0, 1.0, 0.5);
+    this.props.colorSpread = props.colorSpread || new Vector();
+    this.props.colorTween =
+      props.colorTween ||
+      new Tween([0.5, 2], [new Vector(0, 1, 0.5), new Vector(1, 1, 0.5)]);
+
+    this.props.opacityBase = props.opacityBase || 1;
+    this.props.opacitySpread = props.opacitySpread || 0;
+    this.props.opacityTween = props.opacityTween || new Tween([2, 3], [1, 0]);
+
+    console.log('just set props...', this.props);
   }
 
   /**

@@ -2,62 +2,67 @@ import { Vector } from '../math';
 import Tween from './Tween';
 
 export interface ParticleSystemProps {
-  origin: Vector;
   lifespan: number;
+  particleLifespan: number;
   genRate: number;
 
   posStyle: Type;
   posBase: Vector;
-  posSpread: Vector;
-  posRadius: number; // distance from base at which particles start
+  posSpread?: Vector;
+  posRadius?: number; // distance from base at which particles start
 
   velStyle: Type;
   velBase: Vector;
-  velSpread: Vector;
-  speedBase: number;
-  speedSpread: number;
+  velSpread?: Vector;
+  speedBase?: number;
+  speedSpread?: number;
 
-  accBase: Vector;
-  accSpread: Vector;
+  accBase?: Vector;
+  accSpread?: Vector;
 
-  angleBase: number;
-  angleSpread: number;
-  angleVelBase: number;
-  angleVelSpread: number;
-  angleAccBase: number;
-  angleAccSpread: number;
+  particleTexture?: any;
+  blendStyle?: any;
 
-  radiusBase: number;
-  radiusSpread: number;
-  radiusTween: Tween;
+  // rotation of image used for particle
+  angleBase?: number;
+  angleSpread?: number;
+  angleVelBase?: number;
+  angleVelSpread?: number;
+  angleAccBase?: number;
+  angleAccSpread?: number;
 
-  // store colors in HSL format in a THREE.Vector3 object
-  // http://en.wikipedia.org/wiki/HSL_and_HSV
-  // JK lets store colors in RGB
-  colorBase: Vector;
-  colorSpread: Vector;
-  colorTween: Tween;
+  // size, color, opacity
+  //   for static  values, use base/spread
+  //   for dynamic values, use Tween
+  //   (non-empty Tween takes precedence)
+  radiusBase?: number;
+  radiusSpread?: number;
+  radiusTween?: Tween;
 
-  opacityBase: number;
-  opacitySpread: number;
-  opacityTween: Tween;
+  colorBase?: Vector;
+  colorSpread?: Vector;
+  colorTween?: Tween;
 
-  particleLifespan: number;
-
-  // blendStyle: THREE.NormalBlending;
+  opacityBase?: number;
+  opacitySpread?: number;
+  opacityTween?: Tween;
 }
 
 export interface ParticleProps {
   pos: Vector;
   vel: Vector;
   acc: Vector;
+  lifespan: number;
   angle: number;
   angleVel: number;
   angleAcc: number;
   radius: number;
+  radiusTween: Tween;
   color: Vector;
+  colorTween: Tween;
   opacity: number;
-  lifespan: number;
+  opacityTween: Tween;
+  texture?: any;
 }
 
 export enum Type {
