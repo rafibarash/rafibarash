@@ -1,3 +1,4 @@
+import { ParticleSystemProps } from './../../../particleSystem/types';
 import * as THREE from 'three';
 import ParticleSystem from '../../../particleSystem/ParticleSystem';
 
@@ -56,8 +57,8 @@ export default class ThreeParticleSystem extends ParticleSystem {
   particleMaterial: THREE.ShaderMaterial;
   particleMesh: THREE.Mesh;
 
-  constructor() {
-    super();
+  constructor(props: ParticleSystemProps) {
+    super(props);
     this.particleGeometry = new THREE.Geometry();
     this.particleTexture = null;
     this.particleMaterial = new THREE.ShaderMaterial({

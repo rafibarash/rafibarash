@@ -1,53 +1,88 @@
 import { ParticleProps } from './types';
+import Tween from './Tween';
 import { Vector } from '../math';
 import { PhysicsObject } from '../physics';
 
-export default class Particle extends PhysicsObject {
-  props: ParticleProps;
+export default class Particle extends PhysicsObject implements ParticleProps {
+  pos: Vector;
+  vel: Vector;
+  acc: Vector;
+  lifespan: number;
+  angle: number;
+  angleVel: number;
+  angleAcc: number;
+  radius: number;
+  radiusTween: Tween;
+  color: Vector;
+  colorTween: Tween;
+  opacity: number;
+  opacityTween: Tween;
+  texture: any;
 
-  constructor() {
+  constructor(props: ParticleProps) {
     super(new Vector(), {});
+    this.setProps(props);
   }
 
   update(dt: number) {
+    if (this.isDead()) return;
+
     // 1st order Eulerian Integration
-    this.props.vel.add(Vector.mul(this.props.acc, dt));
-    this.props.pos.add(Vector.mul(this.props.vel, dt));
+    this.vel.add(Vector.mul(this.acc, dt));
+    this.pos.add(Vector.mul(this.vel, dt));
 
     // convert from degrees to radians: 0.01745329251 = Math.PI/180
-    this.props.angle += this.props.angleVel * 0.01745329251 * dt;
-    this.props.angleVel += this.props.angleAcc * 0.01745329251 * dt;
+    this.angle += this.angleVel * 0.01745329251 * dt;
+    this.angleVel += this.angleAcc * 0.01745329251 * dt;
 
-    this.props.lifespan -= dt;
+    this.lifespan -= dt;
 
     // if the tween for a given attribute is nonempty,
     //  then use it to update the attribute's value
 
-    if (this.props.radiusTween.times.length > 0)
-      this.props.radius = <number>(
-        this.props.radiusTween.lerp(this.props.lifespan)
-      );
+    if (this.radiusTween.times.length > 0)
+      this.radius = <number>this.radiusTween.lerp(this.lifespan);
 
-    if (this.props.colorTween.times.length > 0) {
-      this.props.color = <Vector>(
-        this.props.colorTween.lerp(this.props.lifespan)
-      );
+    if (this.colorTween.times.length > 0) {
+      this.color = <Vector>this.colorTween.lerp(this.lifespan);
       // this.props.color = new THREE.Color().setHSL(colorHSL.x, colorHSL.y, colorHSL.z);
     }
 
-    if (this.props.opacityTween.times.length > 0)
-      this.props.opacity = <number>(
-        this.props.opacityTween.lerp(this.props.lifespan)
-      );
+    if (this.opacityTween.times.length > 0)
+      this.opacity = <number>this.opacityTween.lerp(this.lifespan);
   }
 
   setProps(props: ParticleProps) {
-    this.props = props;
+    const {
+      pos,
+      vel,
+      acc,
+      lifespan,
+      angle,
+      angleVel,
+      angleAcc,
+      radius,
+      color,
+      opacity,
+      texture,
+    } = props;
+
+    this.pos = pos;
+    this.vel = vel;
+    this.acc = acc;
+    this.lifespan = lifespan;
+    this.angle = angle;
+    this.angleVel = angleVel;
+    this.angleAcc = angleAcc;
+    this.radius = radius;
+    this.color = color;
+    this.opacity = opacity;
+    this.texture = texture;
   }
 
   // Is the particle still useful?
   isDead(): boolean {
-    if (this.props.lifespan < 0.0) {
+    if (this.lifespan < 0.0) {
       return true;
     } else {
       return false;

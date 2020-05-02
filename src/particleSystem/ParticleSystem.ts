@@ -6,12 +6,68 @@ import { ParticleProps, ParticleSystemProps, Type } from './types';
 import { Vector, getRandomInt } from '../math';
 import Tween from './Tween';
 
-export default class ParticleSystem {
-  props: ParticleSystemProps; // Internal particle system properties
+export default class ParticleSystem implements ParticleSystemProps {
   particles: Array<Particle>;
 
-  constructor() {
+  /****************************************************************
+   * Particle System Properties
+   ***************************************************************/
+  lifespan: number;
+  particleLifespan: number;
+  genRate: number;
+
+  /****************************************************************
+   * Particle Properties
+   ***************************************************************/
+
+  posStyle: Type;
+  posBase: Vector;
+  posSpread?: Vector;
+  posRadius?: number; // distance from base at which particles start
+
+  velStyle: Type;
+  velBase: Vector;
+  velSpread?: Vector;
+  speedBase?: number;
+  speedSpread?: number;
+
+  accBase?: Vector;
+  accSpread?: Vector;
+
+  particleTexture?: any;
+  blendStyle?: any;
+
+  // rotation of image used for particle
+  angleBase?: number;
+  angleSpread?: number;
+  angleVelBase?: number;
+  angleVelSpread?: number;
+  angleAccBase?: number;
+  angleAccSpread?: number;
+
+  // size, color, opacity
+  //   for static  values, use base/spread
+  //   for dynamic values, use Tween
+  //   (non-empty Tween takes precedence)
+  radiusBase?: number;
+  radiusSpread?: number;
+  radiusTween?: Tween;
+
+  colorBase?: Vector;
+  colorSpread?: Vector;
+  colorTween?: Tween;
+
+  opacityBase?: number;
+  opacitySpread?: number;
+  opacityTween?: Tween;
+
+  /****************************************************************
+   * Beginning of Class Functions
+   ***************************************************************/
+
+  constructor(props: ParticleSystemProps) {
     this.particles = [];
+    this.setProps(props);
   }
 
   /**
@@ -21,24 +77,24 @@ export default class ParticleSystem {
    * @memberof ParticleSystem
    */
   update(dt: number): void {
-    if (!this.isDead()) {
-      const liveParticles: Array<Particle> = [];
-      console.log('about to loop through existing particles', this.particles);
-      for (let p of this.particles) {
-        if (!p.isDead()) {
-          // particle still alive
-          p.update(dt);
-          liveParticles.push(p);
-        } else {
-          // kill particle
-        }
+    if (this.isDead()) return;
+
+    const liveParticles: Array<Particle> = [];
+    console.log('about to loop through existing particles', this.particles);
+    for (let p of this.particles) {
+      if (!p.isDead()) {
+        // particle still alive
+        p.update(dt);
+        liveParticles.push(p);
+      } else {
+        // kill particle
       }
-      this.particles = liveParticles;
-      console.log('about to gen particles');
-      this.genParticles(dt);
-      console.log('just generated particles', this.particles);
-      this.props.lifespan -= dt;
     }
+    this.particles = liveParticles;
+    console.log('about to gen particles');
+    this.genParticles(dt);
+    console.log('just generated particles', this.particles);
+    this.lifespan -= dt;
   }
 
   /**
@@ -48,7 +104,7 @@ export default class ParticleSystem {
    * @memberof ParticleSystem
    */
   genParticles(dt: number): void {
-    const numParticles = Math.round(this.props.genRate * dt);
+    const numParticles = Math.round(this.genRate * dt);
     console.log(numParticles);
     for (let i = 0; i < numParticles; i++) {
       this.particles.push(this.genParticle());
@@ -99,7 +155,7 @@ export default class ParticleSystem {
       particleTexture,
 
       particleLifespan,
-    } = this.props;
+    } = this;
 
     let pos: Vector,
       vel: Vector,
@@ -186,46 +242,52 @@ export default class ParticleSystem {
    * @memberof ParticleSystem
    */
   setProps(props: ParticleSystemProps) {
-    this.props = props;
+    /// Set values ///
+    this.lifespan = props.lifespan;
+    this.particleLifespan = props.particleLifespan;
+    this.genRate = props.genRate;
 
-    // Default Values
-    this.props.posSpread = props.posSpread || new Vector();
-    this.props.posRadius = props.posRadius || 10;
+    this.posStyle = props.posStyle;
+    this.posBase = props.posBase;
+    this.posSpread = props.posSpread || new Vector();
+    this.posRadius = props.posRadius || 10;
 
-    this.props.velSpread = props.velSpread || new Vector();
-    this.props.speedBase = props.speedBase || 20;
-    this.props.speedSpread = props.speedSpread || 10;
+    this.velStyle = props.velStyle;
+    this.velBase = props.velBase;
+    this.velSpread = props.velSpread || new Vector();
+    this.speedBase = props.speedBase || 20;
+    this.speedSpread = props.speedSpread || 10;
 
-    this.props.accBase = props.accBase || new Vector();
-    this.props.accSpread = props.accSpread || new Vector();
+    this.accBase = props.accBase || new Vector();
+    this.accSpread = props.accSpread || new Vector();
 
     // this.props.particleTexture =
     //   props.particleTexture || THREE.ImageUtils.loadTexture('images/star.png');
     // this.props.blendStyle = props.blendStyle || THREE.NormalBlending
+    this.particleTexture = props.particleTexture;
+    this.blendStyle = props.blendStyle;
 
-    this.props.angleBase = props.angleBase || 0;
-    this.props.angleSpread = props.angleSpread || 0;
-    this.props.angleVelBase = props.angleVelBase || 0;
-    this.props.angleVelSpread = props.angleVelSpread || 0;
-    this.props.angleAccBase = props.angleAccBase || 0;
-    this.props.angleAccSpread = props.angleAccSpread || 0;
+    this.angleBase = props.angleBase || 0;
+    this.angleSpread = props.angleSpread || 0;
+    this.angleVelBase = props.angleVelBase || 0;
+    this.angleVelSpread = props.angleVelSpread || 0;
+    this.angleAccBase = props.angleAccBase || 0;
+    this.angleAccSpread = props.angleAccSpread || 0;
 
-    this.props.radiusBase = props.radiusBase || 20;
-    this.props.radiusSpread = props.radiusSpread || 5;
-    this.props.radiusTween = props.radiusTween || new Tween([0, 1], [1, 20]);
+    this.radiusBase = props.radiusBase || 20;
+    this.radiusSpread = props.radiusSpread || 5;
+    this.radiusTween = props.radiusTween || new Tween([0, 1], [1, 20]);
 
     // by default colors in HSL
-    this.props.colorBase = props.colorBase || new Vector(0.0, 1.0, 0.5);
-    this.props.colorSpread = props.colorSpread || new Vector();
-    this.props.colorTween =
+    this.colorBase = props.colorBase || new Vector(0.0, 1.0, 0.5);
+    this.colorSpread = props.colorSpread || new Vector();
+    this.colorTween =
       props.colorTween ||
       new Tween([0.5, 2], [new Vector(0, 1, 0.5), new Vector(1, 1, 0.5)]);
 
-    this.props.opacityBase = props.opacityBase || 1;
-    this.props.opacitySpread = props.opacitySpread || 0;
-    this.props.opacityTween = props.opacityTween || new Tween([2, 3], [1, 0]);
-
-    console.log('just set props...', this.props);
+    this.opacityBase = props.opacityBase || 1;
+    this.opacitySpread = props.opacitySpread || 0;
+    this.opacityTween = props.opacityTween || new Tween([2, 3], [1, 0]);
   }
 
   /**
@@ -264,7 +326,7 @@ export default class ParticleSystem {
    * @memberof ParticleSystem
    */
   isDead(): boolean {
-    if (this.props.lifespan < 0.0) {
+    if (this.lifespan < 0.0) {
       return true;
     } else {
       return false;

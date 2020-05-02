@@ -16,7 +16,12 @@ class App extends AbstractApp {
   }
 
   update(dt: number) {
-    this.particleSystem.update(dt * 0.5);
+    if (!this.particleSystem.isDead()) {
+      // update particle system
+      this.particleSystem.update(dt * 0.5);
+    } else {
+      // TODO: Kill and remove from scene
+    }
   }
 
   render() {
@@ -24,8 +29,7 @@ class App extends AbstractApp {
   }
 
   private createParticleSystem() {
-    this.particleSystem = new ThreeParticleSystem();
-    this.particleSystem.setProps(Examples.starfield);
+    this.particleSystem = new ThreeParticleSystem(Examples.starfield);
   }
 }
 
