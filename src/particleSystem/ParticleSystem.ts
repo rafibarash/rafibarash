@@ -8,6 +8,7 @@ import Tween from './Tween';
 
 export default class ParticleSystem implements ParticleSystemProps {
   particles: Array<Particle>;
+  static Type = Type;
 
   /****************************************************************
    * Particle System Properties
