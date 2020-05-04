@@ -24,7 +24,10 @@ class App extends AbstractApp {
   }
 
   private createParticleSystem() {
-    this.particleSystem = new ThreeParticleSystem(Examples.starfield);
+    this.particleSystem = new ThreeParticleSystem(
+      Examples.starfield,
+      this.scene
+    );
   }
 }
 

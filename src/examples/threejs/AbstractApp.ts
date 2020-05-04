@@ -27,11 +27,12 @@ export default abstract class AbstractApp {
   abstract render(): void;
 
   protected defaultInit() {
-    this.createScene();
+    this.createScene(); // must be first
     this.createRenderer();
     this.createCamera();
     this.createLights();
     this.createFloor();
+    this.createCube();
     this.addEventListeners();
   }
 
@@ -48,9 +49,10 @@ export default abstract class AbstractApp {
   // Initialize camera
   protected createCamera = () => {
     this.camera = new Camera();
+    this.scene.add(this.camera);
+    // this.camera.position.z = 5;
     this.camera.position.set(0, 200, 400);
     this.camera.lookAt(this.scene.position);
-    this.scene.add(this.camera);
   };
 
   // Initalize lights
@@ -62,20 +64,38 @@ export default abstract class AbstractApp {
 
   // Create a floor
   protected createFloor() {
-    const floorTexture = THREE.ImageUtils.loadTexture(
-      'images/checkerboard.jpg'
-    ); // need "new" keyword?
+    const floorTexture = new THREE.TextureLoader().load(
+      '../images/checkerboard.jpg'
+    );
     floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
     floorTexture.repeat.set(10, 10);
-    var floorMaterial = new THREE.MeshBasicMaterial({
+    const floorMaterial = new THREE.MeshBasicMaterial({
       color: 0x444444,
       map: floorTexture,
       side: THREE.DoubleSide,
     });
-    var floorGeometry = new THREE.PlaneGeometry(1000, 1000, 10, 10);
-    var floor = new THREE.Mesh(floorGeometry, floorMaterial);
+    const floorGeometry = new THREE.PlaneGeometry(1000, 1000, 10, 10);
+    const floor = new THREE.Mesh(floorGeometry, floorMaterial);
     floor.position.y = -10.5;
     floor.rotation.x = Math.PI / 2;
+    this.scene.add(floor);
+  }
+
+  protected createCube() {
+    // Geometry
+    const boxWidth = 1;
+    const boxHeight = 1;
+    const boxDepth = 1;
+    const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
+
+    // Material
+    const material = new THREE.MeshBasicMaterial({
+      color: 0x44aa88, // greenish blue
+    });
+
+    // Mesh
+    const mesh = new THREE.Mesh(geometry, material);
+    this.scene.add(mesh);
   }
 
   // Add event listeners

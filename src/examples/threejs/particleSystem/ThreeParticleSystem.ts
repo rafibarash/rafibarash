@@ -1,6 +1,7 @@
 import { ParticleSystemProps } from './../../../particleSystem/types';
 import * as THREE from 'three';
 import ParticleSystem from '../../../particleSystem/ParticleSystem';
+import Particle from '../../../particleSystem/Particle';
 
 /////////////
 // SHADERS //
@@ -52,32 +53,81 @@ const particleFragmentShader = [
 ].join('\n');
 
 export default class ThreeParticleSystem extends ParticleSystem {
+  scene: THREE.Scene;
   particleGeometry: THREE.Geometry;
   particleTexture: any;
-  particleMaterial: THREE.ShaderMaterial;
-  particleMesh: THREE.Mesh;
+  particleMaterial: THREE.PointsMaterial;
+  particleMesh: THREE.Points;
 
-  constructor(props: ParticleSystemProps) {
+  constructor(props: ParticleSystemProps, scene: THREE.Scene) {
     super(props);
+
+    this.scene = scene;
+
+    this.initThree();
+  }
+
+  update(dt: number) {
+    // if (this.isDead() && this.particles.length === 0) return;
+    // const liveParticles: Array<Particle> = [];
+    // // update particle data
+    // for (let i = 0; i < this.particles.length; i++) {
+    //   let p = this.particles[i];
+    //   if (!p.isDead()) {
+    //     // particle still alive
+    //     p.update(dt);
+    //     liveParticles.push(p);
+    //   } else {
+    //     // kill particle
+    //   }
+    // }
+    // this.particles = liveParticles;
+    // if (!this.isDead()) {
+    //   this.genParticles(dt);
+    //   this.lifespan -= dt;
+    // }
+    // console.log('updating...');
+    // this.particleMesh.geometry.vertices.forEach((particle) => {
+    //   particle.z += 0.3;
+    //   if (particle.z > 40) {
+    //     particle.z = -10;
+    //   }
+    // });
+    // this.particleMesh.geometry.verticesNeedUpdate = true;
+  }
+
+  kill() {
+    this.scene.remove(this.particleMesh);
+    console.log('removing particle mesh from scene');
+  }
+
+  private initThree() {
     this.particleGeometry = new THREE.Geometry();
     this.particleTexture = null;
-    this.particleMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        texture: { type: 't', value: this.particleTexture },
-      },
-      // attributes: {
-      //   customVisible: { type: 'f', value: [] },
-      //   customAngle: { type: 'f', value: [] },
-      //   customSize: { type: 'f', value: [] },
-      //   customColor: { type: 'c', value: [] },
-      //   customOpacity: { type: 'f', value: [] },
-      // },
-      vertexShader: particleVertexShader,
-      fragmentShader: particleFragmentShader,
-      transparent: true, // alphaTest: 0.5,  // if having transparency issues, try including: alphaTest: 0.5,
-      blending: THREE.NormalBlending,
-      depthTest: true,
+    this.particleMaterial = new THREE.PointsMaterial({
+      color: 'rgb(255, 255, 255)',
+      size: 0.3,
+      map: new THREE.TextureLoader().load('../images/star.png'),
+      transparent: true,
+      blending: THREE.AdditiveBlending,
     });
-    this.particleMesh = new THREE.Mesh();
+
+    let particleCount = 5800;
+    let particleDistance = 53;
+    for (var i = 0; i < particleCount; i++) {
+      let posX = (Math.random() - 0.5) * particleDistance;
+      let posY = (Math.random() - 0.5) * particleDistance;
+      let posZ = (Math.random() - 0.5) * particleDistance;
+      let particle = new THREE.Vector3(posX, posY, posZ);
+      this.particleGeometry.vertices.push(particle);
+    }
+
+    this.particleMesh = new THREE.Points(
+      this.particleGeometry,
+      this.particleMaterial
+    );
+    // this.particleMesh.dynamic = true;
+    // this.particleMesh.sortParticles = true;
+    this.scene.add(this.particleMesh);
   }
 }
