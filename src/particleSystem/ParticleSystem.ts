@@ -169,9 +169,9 @@ export default class ParticleSystem implements ParticleSystemProps {
       opacity: number,
       texture: any;
 
-    if (posStyle === Type.CUBE) {
+    if (posStyle === ShapeType.CUBE) {
       pos = this.randomVec(posBase, posSpread);
-    } else if (posStyle === Type.SPHERE) {
+    } else if (posStyle === ShapeType.SPHERE) {
       const z = 2 * Math.random() - 1;
       const t = 6.2832 * Math.random();
       const r = Math.sqrt(1 - z * z);
@@ -179,9 +179,9 @@ export default class ParticleSystem implements ParticleSystemProps {
       pos = Vector.add(posBase, Vector.mul(vec3, posRadius));
     }
 
-    if (velStyle === Type.CUBE) {
+    if (velStyle === ShapeType.CUBE) {
       vel = this.randomVec(velBase, velSpread);
-    } else if (velStyle === Type.SPHERE) {
+    } else if (velStyle === ShapeType.SPHERE) {
       const direction = Vector.sub(pos, posBase);
       const speed = this.randomNum(speedBase, speedSpread);
       vel = Vector.mul(Vector.normalize(direction), speed);
