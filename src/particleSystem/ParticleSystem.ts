@@ -2,13 +2,13 @@
 // https://github.com/stemkoski/stemkoski.github.com/blob/f5c7120af8488d04255b3e4492f4fb214d80b6ff/Three.js/js/ParticleEngine.js
 
 import Particle from './Particle';
-import { ParticleProps, ParticleSystemProps, Type } from './types';
+import { ParticleProps, ParticleSystemProps, ShapeType } from './types';
 import { Vector, getRandomInt } from '../math';
 import Tween from './Tween';
 
 export default class ParticleSystem implements ParticleSystemProps {
   particles: Array<Particle>;
-  static Type = Type;
+  static ShapeType = ShapeType;
 
   /****************************************************************
    * Particle System Properties
@@ -21,12 +21,12 @@ export default class ParticleSystem implements ParticleSystemProps {
    * Particle Properties
    ***************************************************************/
 
-  posStyle: Type;
+  posStyle: ShapeType;
   posBase: Vector;
   posSpread?: Vector;
   posRadius?: number; // distance from base at which particles start
 
-  velStyle: Type;
+  velStyle: ShapeType;
   velBase: Vector;
   velSpread?: Vector;
   speedBase?: number;
@@ -66,9 +66,8 @@ export default class ParticleSystem implements ParticleSystemProps {
    * Beginning of Class Functions
    ***************************************************************/
 
-  constructor(props: ParticleSystemProps) {
+  constructor() {
     this.particles = [];
-    this.setProps(props);
   }
 
   /**

@@ -65,7 +65,7 @@ export interface ParticleProps {
   texture?: any;
 }
 
-export enum Type {
+export enum ShapeType {
   CUBE,
   SPHERE,
 }
