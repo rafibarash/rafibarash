@@ -22,30 +22,28 @@ export default abstract class Collider {
   abstract getCenter(): Vector;
 
   intersect(other: Collider): IntersectData {
-    switch (this.type) {
-      case Collider.Type.SPHERE: {
-        // This Collider is a Bounding Sphere
-        const self = <BoundingSphere>(<unknown>this);
-        if (other.isSphere()) {
-          // Intersect with other bounding sphere
-          return self.intersectBoundingSphere(<BoundingSphere>other);
-        }
-        break;
+    if (this.isSphere()) {
+      // This Collider is a Bounding Sphere
+      const self = <BoundingSphere>(<unknown>this);
+      if (other.isSphere()) {
+        // Intersect with other Bounding Sphere
+        return self.intersectBoundingSphere(<BoundingSphere>other);
+      } else if (other.isAABB()) {
+        // Intersect with other AABB
+        return self.intersectAABB(<AABB>other);
       }
-      case Collider.Type.AABB: {
-        // This Collider is an AABB
-        const self = <AABB>(<unknown>this);
-        if (other.isAABB()) {
-          // Intersect with other AABB
-          return self.intersectAABB(<AABB>other);
-        }
+    } else if (this.isAABB()) {
+      // This Collider is an AABB
+      const self = <AABB>(<unknown>this);
+      if (other.isAABB()) {
+        // Intersect with other AABB
+        return self.intersectAABB(<AABB>other);
+      } else if (other.isSphere()) {
+        // Intersect with other Bounding Sphere
+        return self.intersectBoundingSphere(<BoundingSphere>other);
       }
-      case Collider.Type.NONE: {
-        break;
-      }
-      default:
-        break;
     }
+
     throw new Error(
       `Trying to create an unsupported collision of type "${this.type}" and "${other.type}`
     );

@@ -77,6 +77,23 @@ export default class Vector {
     return vec;
   }
 
+  min(): number {
+    let minVal = this.x;
+    if (this.y < minVal) minVal = this.y;
+    if (this.z < minVal) minVal = this.z;
+    return minVal;
+  }
+
+  static min(v1: Vector, v2: Vector): Vector {
+    const vec = new Vector();
+
+    vec.x = v1.x < v2.x ? v1.x : v2.x;
+    vec.y = v1.y < v2.y ? v1.y : v2.y;
+    vec.z = v1.z < v2.z ? v1.z : v2.z;
+
+    return vec;
+  }
+
   /***********************************************
    * More Complex Math
    **********************************************/

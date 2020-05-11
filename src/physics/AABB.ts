@@ -3,6 +3,7 @@
 
 import { Vector } from '../math';
 import IntersectData from './IntersectData';
+import BoundingSphere from './BoundingSphere';
 import Collider from './Collider';
 
 export default class AABB extends Collider {
@@ -31,6 +32,17 @@ export default class AABB extends Collider {
     const distances = Vector.max(distances1, distances2);
     const maxDistance = distances.max();
     return new IntersectData(maxDistance < 0, maxDistance);
+  }
+
+  intersectBoundingSphere(other: BoundingSphere): IntersectData {
+    // get box closest point to sphere center by clamping
+    const minVec = Vector.min(other.getCenter(), this.maxExtents);
+    const maxVec = Vector.max(this.minExtents, minVec);
+
+    // this is the same as isPointInsideSphere
+    const distance = Vector.distance(maxVec, other.getCenter());
+
+    return new IntersectData(distance < other.getRadius(), distance);
   }
 
   getMinExtents(): Vector {
