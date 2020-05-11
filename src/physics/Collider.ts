@@ -4,22 +4,16 @@
 import IntersectData from './IntersectData';
 import BoundingSphere from './BoundingSphere';
 import { Vector } from '../math';
+import { CollidableType } from './types';
 import AABB from './AABB';
 
-enum Type {
-  SPHERE,
-  AABB,
-  PLANE,
-  NONE,
-}
-
 export default abstract class Collider {
-  static readonly Type = Type;
+  static readonly Type = CollidableType;
   readonly Type = Collider.Type;
 
-  type: Type;
+  type: CollidableType;
 
-  constructor(type: Type) {
+  constructor(type: CollidableType) {
     this.type = type;
   }
 
@@ -36,6 +30,7 @@ export default abstract class Collider {
           // Intersect with other bounding sphere
           return self.intersectBoundingSphere(<BoundingSphere>other);
         }
+        break;
       }
       case Collider.Type.AABB: {
         // This Collider is an AABB
@@ -51,23 +46,25 @@ export default abstract class Collider {
       default:
         break;
     }
-    return new IntersectData(false, 0);
+    throw new Error(
+      `Trying to create an unsupported collision of type "${this.type}" and "${other.type}`
+    );
   }
 
-  getType(): Type {
+  getType(): CollidableType {
     return this.type;
   }
 
   isSphere(): boolean {
-    return this.type === Type.SPHERE;
+    return this.type === CollidableType.SPHERE;
   }
 
   isAABB(): boolean {
-    return this.type === Type.AABB;
+    return this.type === CollidableType.AABB;
   }
 
   isPlane(): boolean {
-    return this.type === Type.PLANE;
+    return this.type === CollidableType.PLANE;
   }
 }
 

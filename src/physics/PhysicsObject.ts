@@ -80,4 +80,8 @@ export default abstract class PhysicsObject {
     this.collider.transform(translation);
     return this.collider;
   }
+
+  setCollider(c: Collider): void {
+    this.collider = c;
+  }
 }

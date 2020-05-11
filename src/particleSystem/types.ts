@@ -5,13 +5,14 @@ export interface ParticleSystemProps {
   lifespan: number;
   particleLifespan: number;
   genRate: number;
+  isCollidable?: boolean;
 
-  posStyle: Type;
+  posStyle: ShapeType;
   posBase: Vector;
   posSpread?: Vector;
   posRadius?: number; // distance from base at which particles start
 
-  velStyle: Type;
+  velStyle: ShapeType;
   velBase: Vector;
   velSpread?: Vector;
   speedBase?: number;
@@ -63,6 +64,7 @@ export interface ParticleProps {
   opacity: number;
   opacityTween: Tween;
   texture?: any;
+  isCollidable?: boolean;
 }
 
 export enum ShapeType {

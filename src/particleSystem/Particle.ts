@@ -1,7 +1,7 @@
 import { ParticleProps } from './types';
 import Tween from './Tween';
 import { Vector } from '../math';
-import { PhysicsObject } from '../physics';
+import { PhysicsObject, BoundingSphere } from '../physics';
 
 export default class Particle extends PhysicsObject implements ParticleProps {
   pos: Vector;
@@ -68,6 +68,7 @@ export default class Particle extends PhysicsObject implements ParticleProps {
       opacity,
       opacityTween,
       texture,
+      isCollidable,
     } = props;
 
     this.pos = pos;
@@ -84,6 +85,12 @@ export default class Particle extends PhysicsObject implements ParticleProps {
     this.opacity = opacity;
     this.opacityTween = opacityTween;
     this.texture = texture;
+
+    // Collidable
+    if (isCollidable) {
+      const collider = new BoundingSphere(pos, radius);
+      this.setCollider(collider);
+    }
   }
 
   // Is the particle still useful?

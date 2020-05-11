@@ -1,3 +1,4 @@
+import { CollidableType } from './../physics/types';
 // Very heavily influenced by an existing particle engine
 // https://github.com/stemkoski/stemkoski.github.com/blob/f5c7120af8488d04255b3e4492f4fb214d80b6ff/Three.js/js/ParticleEngine.js
 
@@ -5,6 +6,7 @@ import Particle from './Particle';
 import { ParticleProps, ParticleSystemProps, ShapeType } from './types';
 import { Vector, getRandomInt } from '../math';
 import Tween from './Tween';
+import Collider from '../physics/Collider';
 
 export default class ParticleSystem implements ParticleSystemProps {
   particles: Array<Particle>;
@@ -16,6 +18,7 @@ export default class ParticleSystem implements ParticleSystemProps {
   lifespan: number;
   particleLifespan: number;
   genRate: number;
+  isCollidable?: boolean;
 
   /****************************************************************
    * Particle Properties
@@ -153,8 +156,8 @@ export default class ParticleSystem implements ParticleSystemProps {
       opacityTween,
 
       particleTexture,
-
       particleLifespan,
+      isCollidable,
     } = this;
 
     let pos: Vector,
@@ -215,6 +218,7 @@ export default class ParticleSystem implements ParticleSystemProps {
       opacityTween,
       texture,
       lifespan,
+      isCollidable,
     };
 
     const particle = new Particle(particleProps);
