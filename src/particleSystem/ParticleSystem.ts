@@ -249,6 +249,7 @@ export default class ParticleSystem implements ParticleSystemProps {
     this.lifespan = props.lifespan;
     this.particleLifespan = props.particleLifespan;
     this.genRate = props.genRate;
+    this.isCollidable = props.isCollidable;
 
     this.posStyle = props.posStyle;
     this.posBase = props.posBase;
