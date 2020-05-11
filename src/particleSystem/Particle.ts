@@ -88,7 +88,7 @@ export default class Particle extends PhysicsObject implements ParticleProps {
 
     // Collidable
     if (isCollidable) {
-      const collider = new BoundingSphere(pos, radius);
+      const collider = new BoundingSphere(pos.copy(), radius);
       this.setCollider(collider);
     }
   }
