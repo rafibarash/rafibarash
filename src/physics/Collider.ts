@@ -22,6 +22,10 @@ export default abstract class Collider {
   abstract getCenter(): Vector;
 
   intersect(other: Collider): IntersectData {
+    if (this.isNoCollider() || other.isNoCollider()) {
+      return new IntersectData(false, 0);
+    }
+    // Handle collisions
     if (this.isSphere()) {
       // This Collider is a Bounding Sphere
       const self = <BoundingSphere>(<unknown>this);
@@ -63,6 +67,10 @@ export default abstract class Collider {
 
   isPlane(): boolean {
     return this.type === CollidableType.PLANE;
+  }
+
+  isNoCollider(): boolean {
+    return this.type === CollidableType.NONE;
   }
 }
 
