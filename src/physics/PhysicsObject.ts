@@ -74,10 +74,11 @@ export default abstract class PhysicsObject {
   getCollider(): Collider {
     // Find distance between current and old position
     const translation = Vector.sub(this.pos, this.oldPos);
-    // Update old position back to current position
-    this.oldPos = this.pos;
     // Move collider by distance moved
     this.collider.transform(translation);
+    // Update old position back to current position
+    this.oldPos = this.pos.copy();
+
     return this.collider;
   }
 
