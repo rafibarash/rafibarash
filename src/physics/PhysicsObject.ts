@@ -39,13 +39,21 @@ export default abstract class PhysicsObject {
     if (this.maxForce > 0) {
       force.limit(this.maxForce);
     }
+    force.mul(1 / this.mass);
     this.acc.add(force);
   }
 
   protected numericalIntegration(dt: number): void {
     this.vel.add(Vector.mul(this.acc, dt));
     this.pos.add(Vector.mul(this.vel, dt));
-    this.acc = new Vector();
+  }
+
+  setAccel(accel: Vector): void {
+    this.acc = accel;
+  }
+
+  getAccel(): Vector {
+    return this.acc;
   }
 
   setPos(pos: Vector): void {
