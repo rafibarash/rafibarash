@@ -39,7 +39,7 @@ export default class BoundingSphere extends Collider {
   }
 
   getCenter(): Vector {
-    return this.center;
+    return this.center.copy();
   }
 
   getRadius(): number {

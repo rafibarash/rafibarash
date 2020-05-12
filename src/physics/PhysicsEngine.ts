@@ -3,7 +3,6 @@
 
 import { Vector } from '../math';
 import PhysicsObject from './PhysicsObject';
-import IntersectData from './IntersectData';
 
 export default abstract class PhysicsEngine {
   protected objects: Array<PhysicsObject>;

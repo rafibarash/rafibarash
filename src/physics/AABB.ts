@@ -22,8 +22,9 @@ export default class AABB extends Collider {
   }
 
   getCenter(): Vector {
-    // TODO: how to do this?
-    return this.minExtents;
+    const center = Vector.add(this.minExtents, this.maxExtents);
+    center.div(2);
+    return center;
   }
 
   intersectAABB(other: AABB): IntersectData {

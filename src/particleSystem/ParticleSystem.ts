@@ -6,7 +6,6 @@ import Particle from './Particle';
 import { ParticleProps, ParticleSystemProps, ShapeType } from './types';
 import { Vector, getRandomInt } from '../math';
 import Tween from './Tween';
-import Collider from '../physics/Collider';
 
 export default class ParticleSystem implements ParticleSystemProps {
   particles: Array<Particle>;
